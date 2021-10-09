@@ -193,53 +193,6 @@ if (BUILDING_WIN)
 endif ()
 
 # -----------------------------------------------------------------------------
-# |                                      JNI                                  |
-# -----------------------------------------------------------------------------
-
-if (SDK_JNI OR BUILDING_ANDROID)
-	MESSAGE (STATUS "Looking for JNI")
-
-	if (BUILDING_WIN)
-		# We are only interested in finding jni.h: we do not care about extended JVM
-		# functionality or the AWT library.
-		#set(JAVA_AWT_LIBRARY NotNeeded)
-		#set(JAVA_JVM_LIBRARY NotNeeded)
-		#set(JAVA_INCLUDE_PATH2 NotNeeded)
-		#set(JAVA_AWT_INCLUDE_PATH NotNeeded)
-		set(JAVA_INCLUDE_PATH "C:\\Program Files\\Java\\jdk-10.0.2\\include")
-	endif ()
-
-	set(JAVA_AWT_LIBRARY NotNeeded)
-	set(JAVA_JVM_LIBRARY NotNeeded)
-	set(JAVA_INCLUDE_PATH2 NotNeeded)
-	set(JAVA_AWT_INCLUDE_PATH NotNeeded)
-	find_package(JNI REQUIRED)
-
-	if (JNI_FOUND)
-		message (STATUS "JNI_INCLUDE_DIR=${JNI_INCLUDE_DIRS}")
-		message (STATUS "JNI_LIBRARIES=${JNI_LIBRARIES}")
-		list (GET JNI_INCLUDE_DIRS 0 JNI_INCLUDE_DIR)
-		message (STATUS "jni path=${JNI_INCLUDE_DIR}")
-		include_directories ("${JNI_INCLUDE_DIR}")
-		#include_directories ("${JNI_INCLUDE_DIRS}")
-		if (BUILDING_WIN)
-			include_directories ("${JNI_INCLUDE_DIR}\\win32")
-		endif ()
-		if (BUILDING_MACOS)
-			include_directories ("${JNI_INCLUDE_DIR}/darwin")
-		endif ()
-		if (BUILDING_LINUX)
-			include_directories ("${JNI_INCLUDE_DIR}/linux")
-		endif ()
-	else ()
-			message (STATUS "JNI not found")
-	endif ()
-	if (JNI_FOUND)
-		add_definitions (-DSDK_JNI=1)
-	endif ()
-endif () # SDK_JNI
-
-# -----------------------------------------------------------------------------
 # |                                   SOURCES                                 |
 # -----------------------------------------------------------------------------
 
