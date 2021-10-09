@@ -58,8 +58,8 @@
 #if __ANDROID__
 //#define LWIP_PROVIDE_ERRNO              0
 #define SOCKLEN_T_DEFINED
-#elif !defined(_MSC_VER)
-#define LWIP_PROVIDE_ERRNO              1
+//#elif !defined(_MSC_VER)
+//#define LWIP_PROVIDE_ERRNO              1
 #endif
 #define LWIP_ERRNO_STDINCLUDE 1
 // Sockets
