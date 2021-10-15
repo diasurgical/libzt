@@ -134,10 +134,15 @@ if (BUILDING_WIN)
 	  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -idirafter ${PROJECT_SOURCE_DIR}/include/mingw-fixes")
 	endif ()
 else ()
+	option(STACK_PROTECTOR "Compile with -fstack-protector" ON)
+	if (STACK_PROTECTOR)
+	  set (STACK_PROTECTOR_FLAGS -fstack-protector)
+	endif ()
+
 	set (CMAKE_C_FLAGS
 		"${CMAKE_C_FLAGS} \
 		 ${ZT_FLAGS} \
-		 -fstack-protector")
+		 ${STACK_PROTECTOR_FLAGS}")
 
 	set (CMAKE_C_FLAGS_DEBUG
 		"${CMAKE_C_FLAGS_DEBUG} \
@@ -148,7 +153,7 @@ else ()
 		"${SILENCE} \
 		 ${CMAKE_C_FLAGS_RELEASE} \
 		 ${RELEASE_OPTIMIZATION} \
-		 -fstack-protector")
+		 ${STACK_PROTECTOR_FLAGS}")
 
 	set (CMAKE_CXX_FLAGS
 		"${CMAKE_CXX_FLAGS} \
@@ -214,13 +219,13 @@ file (GLOB libnatpmpSrcGlob
 
 file (GLOB libminiupnpcSrcGlob
     ${ZTO_SRC_DIR}/ext/miniupnpc/connecthostport.c
-    ${ZTO_SRC_DIR}/ext/miniupnpc/igd_desc_parse.c 
+    ${ZTO_SRC_DIR}/ext/miniupnpc/igd_desc_parse.c
     ${ZTO_SRC_DIR}/ext/miniupnpc/minisoap.c
     ${ZTO_SRC_DIR}/ext/miniupnpc/minissdpc.c
-    ${ZTO_SRC_DIR}/ext/miniupnpc/miniupnpc.c 
+    ${ZTO_SRC_DIR}/ext/miniupnpc/miniupnpc.c
     ${ZTO_SRC_DIR}/ext/miniupnpc/miniwget.c
     ${ZTO_SRC_DIR}/ext/miniupnpc/minixml.c
-    ${ZTO_SRC_DIR}/ext/miniupnpc/portlistingparse.c 
+    ${ZTO_SRC_DIR}/ext/miniupnpc/portlistingparse.c
     ${ZTO_SRC_DIR}/ext/miniupnpc/receivedata.c
     ${ZTO_SRC_DIR}/ext/miniupnpc/upnpcommands.c
     ${ZTO_SRC_DIR}/ext/miniupnpc/upnpdev.c
