@@ -33,12 +33,11 @@ endif ()
 if (BUILDING_WIN32 OR BUILDING_WIN64 OR MSVC)
 	set (BUILDING_WIN TRUE)
 endif ()
-if (NOT BUILDING_ANDROID AND NOT IN_XCODE)
-	set(SHOULD_BUILD_TESTS TRUE)
-endif ()
 if (BUILDING_WIN32 OR BUILDING_WIN64 OR MSVC)
 	set (BUILDING_WIN TRUE)
 endif ()
+
+option(BUILD_EXAMPLES "Build the examples" OFF)
 
 # -----------------------------------------------------------------------------
 # |                                BUILD TYPES                                |
@@ -451,7 +450,7 @@ endif ()
 # |                                EXECUTABLES                                |
 # -----------------------------------------------------------------------------
 
-if (SHOULD_BUILD_TESTS)
+if (BUILD_EXAMPLES)
 	add_executable (earthtest ${PROJ_DIR}/examples/cpp/earthtest.cpp)
 	target_link_libraries(earthtest ${STATIC_LIB_NAME})
 	add_executable (adhoc ${PROJ_DIR}/examples/cpp/adhoc.cpp)
