@@ -220,13 +220,14 @@ NodeService::ReasonForTermination NodeService::run()
                 }
                 ptmp.append(*pi);
                 if ((*pi != ".") && (*pi != "..")) {
-                    if (OSUtils::mkdir(ptmp) == false) {
-                        Mutex::Lock _l(_termReason_m);
-                        _termReason = ONE_UNRECOVERABLE_ERROR;
-                        _fatalErrorMessage = "home path could not be created";
-                        return _termReason;
-                    }
+                    OSUtils::mkdir(ptmp);
                 }
+            }
+            if (OSUtils::mkdir(ptmp) == false) {
+                Mutex::Lock _l(_termReason_m);
+                _termReason = ONE_UNRECOVERABLE_ERROR;
+                _fatalErrorMessage = "home path could not be created";
+                return _termReason;
             }
         }
 
