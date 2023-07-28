@@ -293,6 +293,9 @@ class NodeService {
     /** Return number of multicast subscriptions on the network. Service must be locked. */
     int multicastSubCount(uint64_t net_id) const;
 
+    /** Return peer info for a given MAC address. */
+    int getPeer(uint64_t net_id, uint64_t mac, zts_peer_info_t* peerInfo) const;
+
     /** Return number of known physical paths to the peer. Service must be locked. */
     int pathCount(uint64_t peer_id) const;
 
