@@ -843,9 +843,24 @@ void NodeService::sendEventToUser(unsigned int zt_event_code, const void* obj, u
         case ZTS_EVENT_PEER_PATH_DEAD: {
             zts_peer_info_t* pd = new zts_peer_info_t();
             ZT_Peer* peer = (ZT_Peer*)obj;
-            memcpy(pd, peer, sizeof(zts_peer_info_t));
+            pd->peer_id = peer->address;
+            pd->ver_major = peer->versionMajor;
+            pd->ver_minor = peer->versionMinor;
+            pd->ver_rev = peer->versionRev;
+            pd->latency = peer->latency;
+            pd->role = static_cast<zts_peer_role_t>(peer->role);
+            pd->path_count = peer->pathCount;
             for (unsigned int j = 0; j < peer->pathCount; j++) {
                 native_ss_to_zts_ss(&(pd->paths[j].address), &(peer->paths[j].address));
+                pd->paths[j].last_tx = peer->paths[j].lastSend;
+                pd->paths[j].last_rx = peer->paths[j].lastReceive;
+                pd->paths[j].trusted_path_id = peer->paths[j].trustedPathId;
+                pd->paths[j].latency = peer->paths[j].latencyMean;
+                // I doubt there is any guarantee that the ZT_Peer
+                // instance will outlive the zts_peer_info_t instance
+                //pd->paths[j].ifname = peer->paths[j].ifname;
+                pd->paths[j].expired = peer->paths[j].expired;
+                pd->paths[j].preferred = peer->paths[j].preferred;
             }
             objptr = (void*)pd;
             break;
@@ -1006,6 +1021,16 @@ int NodeService::multicastSubCount(uint64_t net_id) const
         return ZTS_ERR_NO_RESULT;
     }
     return n->second.config.multicastSubscriptionCount;
+}
+
+int NodeService::getPeerId(uint64_t net_id, uint64_t mac, uint64_t* peerId) const
+{
+    ZT_Peer* peer = _node->peer((void*)0, net_id, mac);
+    if (!peer)
+        return ZTS_ERR_NO_RESULT;
+    *peerId = peer->address;
+    _node->freeQueryResult(peer);
+    return ZTS_ERR_OK;
 }
 
 int NodeService::pathCount(uint64_t peer_id) const
