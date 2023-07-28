@@ -396,6 +396,12 @@ int zts_core_query_route(
     return zts_service->getRouteAtIdx(net_id, idx, target, via, len, flags, metric);
 }
 
+int zts_core_query_peer_info(uint64_t net_id, uint64_t mac, zts_peer_info_t* peerInfo)
+{
+    ACQUIRE_SERVICE(ZTS_ERR_SERVICE);
+    return zts_service->getPeer(net_id, mac, peerInfo);
+}
+
 int zts_core_query_path_count(uint64_t peer_id)
 {
     ACQUIRE_SERVICE(ZTS_ERR_SERVICE);

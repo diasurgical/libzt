@@ -2976,6 +2976,18 @@ ZTS_API int ZTCALL zts_core_query_route(
  *
  * @return `ZTS_ERR_OK` if successful. `ZTS_ERR_SERVICE` if the core service is unavailable.
  */
+ZTS_API int ZTCALL zts_core_query_peer_info(uint64_t net_id, uint64_t mac, zts_peer_info_t* peerInfo);
+
+/**
+ * @brief Lock the core service so that queries about addresses, routes, paths, etc. can be
+ * performed.
+ *
+ * Notice: Core locking functions are intended to be used by high-level language wrappers.
+ * Only lock the core if you know *exactly* what you are doing. zts_core_lock_obtain() and
+ * zts_core_lock_release() must be called before and after this function.
+ *
+ * @return `ZTS_ERR_OK` if successful. `ZTS_ERR_SERVICE` if the core service is unavailable.
+ */
 ZTS_API int ZTCALL zts_core_query_path_count(uint64_t peer_id);
 
 /**
