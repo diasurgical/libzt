@@ -985,7 +985,7 @@ void NodeService::releaseLock() const
 bool NodeService::networkIsReady(uint64_t net_id) const
 {
     if (! net_id) {
-        return ZTS_ERR_ARG;
+        return false;
     }
     Mutex::Lock _l(_nets_m);
     std::map<uint64_t, NetworkState>::const_iterator n(_nets.find(net_id));
