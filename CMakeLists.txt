@@ -398,7 +398,7 @@ else()
     set(CMAKE_C_FLAGS_DEBUG
             "${CMAKE_C_FLAGS_DEBUG} \
          ${DEBUG_OPTIMIZATION} \
-         -DLWIP_DEBUG=1 -DLIBZT_DEBUG=1")
+         -DLIBZT_DEBUG=1")
 
     set(CMAKE_C_FLAGS_RELEASE
             "${CMAKE_C_FLAGS_RELEASE} \
@@ -411,7 +411,7 @@ else()
     set(CMAKE_CXX_FLAGS_DEBUG
             "${CMAKE_CXX_FLAGS_DEBUG} \
          ${DEBUG_OPTIMIZATION} \
-         -DLWIP_DEBUG=1 -DLIBZT_DEBUG=1")
+         -DLIBZT_DEBUG=1")
 
     set(CMAKE_CXX_FLAGS_RELEASE
             "${CMAKE_CXX_FLAGS_RELEASE} \
